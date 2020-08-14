@@ -5,7 +5,7 @@ const API_URL = 'http://localhost:8765/api/user/service/';
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
 class UserService {
-  get CurrentUserValue(){
+  get currentUserValue(){
     return currentUserSubject.value;
   }
 
