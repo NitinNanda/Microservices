@@ -56,11 +56,14 @@ export default {
         return;
       }
       UserService.login(this.user).then(
+        // eslint-disable-next-line no-unused-vars
         data => {
           this.$router.push('/profile');
         },
+        // eslint-disable-next-line no-unused-vars
         error => {
           this.loading = false;
+          this.$store.dispatch('error', 'Username or password is not valid.');
         }
       );
     }

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 <template>
   <div class="container">
     <div class="course-container">
@@ -43,8 +44,8 @@
 <script>
 import UserService from '../services/user.service';
 import CourseService from '../services/course.service';
-import {User} from '../models/user';
-import {Transaction} from '../models/transaction';
+import {User} from '../model/user';
+import {Transaction} from '../model/transaction';
 
 export default {
   name: 'home',
@@ -65,15 +66,16 @@ export default {
   methods: {
     enroll(course){
       if(!this.currentUser){
+        this.$store.dispatch('error', 'You should sign in to enroll a course');
         return;
       }
       var transaction = new Transaction(this.currentUser.id, course);
       CourseService.createTransaction(transaction).then(data =>{
-        // We will handle info message later.
+        this.$store.dispatch('success', 'Enrollment is completed.')
 
       }, error => {
         console.log(error);
-        // We will handle error message later.
+        this.$store.dispatch('error', 'Unexpected exception occured.');
       });
     },
     detail(item){

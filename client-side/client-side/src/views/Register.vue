@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 <template>
   <div class="col-md-12">
     <div class="card card-container">
@@ -63,11 +64,21 @@ export default {
         return;
       }
       UserService.register(this.user).then(
+        // eslint-disable-next-line no-unused-vars
         data => {
-          this.$router.push('/login');
+          this.$store.dispatch('success', 'Mission is completed.');
+          setTimeout(() => {
+            this.$router.push('/login');
+          }, 1000);
         },
         error => {
-          this.loading = false;
+          if(!error.response){
+            this.$store.dispatch('error', error);
+          }else if(error.response.status === 409){
+            this.$store.dispatch('error', 'Username is not valid');
+          }else{
+            this.$store.dispatch('error', 'Unexpected error occured.');
+          }
         }
       )
       .then(() => {
